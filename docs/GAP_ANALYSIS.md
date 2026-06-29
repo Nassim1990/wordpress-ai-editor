@@ -19,7 +19,7 @@ gaps are almost all in the **operational, security, and feasibility** layers.
 
 | # | Gap | Why it matters | Status in this scaffold |
 |---|---|---|---|
-| 2 | **R1 "confirm" had no defined actor.** If Claude proposes *and* confirms, the gate is fake. | This is the difference between gated and not. | **Addressed.** Pluggable `Approver` (Telegram / chat-token / dev-auto). Approval is an out-of-band row check, not something Claude can self-issue. |
+| 2 | **R1 "confirm" had no defined actor.** If Claude proposes *and* confirms, the gate is fake. | This is the difference between gated and not. | **Addressed.** Pluggable `Approver` (in-chat confirm-token, default; dev-auto). The operator must relay the plan's token to apply — Claude cannot self-issue approval. |
 | 6 | **Concurrency & locking.** No per-site mutex; interleaved plans can corrupt. | Two writes to one site race. | **Addressed in spine.** Per-site advisory lock acquired across plan→apply. |
 | 7 | **Plan drift at apply time.** TTL stops stale plans but not a target changed out-of-band between plan and apply. | Client edits in wp-admin between plan and apply. | **Addressed.** Plans store a target hash; `apply_plan` re-checks it. |
 | 8 | **Rollback asserted, not engineered.** "Single follow-up call" — by whom, when, on partial failure? | Mid-apply failure leaves inconsistent state. | **Designed.** Plans carry `preflight_backup_ref`; apply is wrapped so a failure records the rollback reference. (Write tools land in later steps.) |
@@ -61,8 +61,8 @@ gaps are almost all in the **operational, security, and feasibility** layers.
 - **Confirm channel:** pluggable `Approver`. The operator works in **Claude
   Cowork** (interactive chat), so the default is **in-chat `chat_token`** — the
   operator approves the plan inline and Cowork's own per-call tool-approval
-  prompt is a second layer. `telegram` (out-of-band) is reserved for the future
-  unattended/automation case; `auto` is dev-only.
+  prompt is a second layer. `auto` is dev-only. (A future out-of-band approval
+  dashboard can plug in via the same interface; none is implemented today.)
 - **REST backend (open decision #3):** for **R0 reads**, call the WP REST API
   directly (no per-site `mcp-adapter` plugin dependency needed for read-only).
   Revisit for write tools.

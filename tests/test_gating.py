@@ -12,8 +12,8 @@ from wpctl.store.sqlite_store import SQLiteStore
 
 def base_cfg(**kw):
     defaults = dict(store="sqlite", sqlite_path=":memory:", supabase_url=None,
-                    supabase_key=None, approver="chat_token", telegram_bot_token=None,
-                    telegram_chat_id=None, plan_ttl_seconds=900, secrets="env")
+                    supabase_key=None, approver="chat_token",
+                    plan_ttl_seconds=900, secrets="env")
     defaults.update(kw)
     return Config(**defaults)
 

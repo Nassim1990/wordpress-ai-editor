@@ -23,9 +23,9 @@ Implemented:
   channel is pluggable** (`Approver` interface). The operator chats with Claude
   in **Claude Cowork**, so the default is **in-chat confirmation**
   (`chat_token`) — the operator approves a plan inline, and Cowork's own
-  per-call tool-approval prompt is a second layer. Telegram (out-of-band) is
-  available for the future unattended/automation case; a dev auto-approver
-  exists for local testing.
+  per-call tool-approval prompt is a second layer. A dev auto-approver exists
+  for local testing. (A future out-of-band approval dashboard can plug in via
+  the same interface; none is implemented today.)
 - **Secret resolution** — refs (`ssh_key_ref`, `app_password_ref`, …) resolve to
   real material server-side and are never returned to Claude.
 - **R0 read tools** — `list_sites`, `get_site`, `get_option`, `db_select`
@@ -67,8 +67,8 @@ All config is via env vars (see `.env.example`). Key choices:
 | Var | Values | Meaning |
 |---|---|---|
 | `WPCTL_STORE` | `sqlite` \| `supabase` | Registry / plans / audit backend |
-| `WPCTL_APPROVER` | `chat_token` \| `telegram` \| `auto` | R1/R2 confirm channel (default `chat_token` for Cowork) |
+| `WPCTL_APPROVER` | `chat_token` \| `auto` | R1/R2 confirm channel (default `chat_token` for Cowork) |
 | `WPCTL_SECRETS` | `env` | Secret resolver (env-based for dev) |
 
 `WPCTL_APPROVER=auto` approves writes with no human — **dev only**. Production
-should use `telegram` or `chat_token`.
+should use `chat_token`.
