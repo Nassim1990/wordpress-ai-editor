@@ -1,0 +1,30 @@
+[project]
+name = "wpctl"
+version = "0.1.0"
+description = "Claude-driven MCP control server for a fleet of self-hosted WordPress sites"
+requires-python = ">=3.11"
+dependencies = [
+    "mcp>=1.2.0",
+    "httpx>=0.27",
+    "pydantic>=2.6",
+]
+
+[project.optional-dependencies]
+ssh = ["paramiko>=3.4"]
+supabase = ["supabase>=2.4"]
+dev = ["pytest>=8.0", "pytest-asyncio>=0.23"]
+
+[project.scripts]
+wpctl-server = "wpctl.server:main"
+wpctl-seed = "wpctl.seed:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]

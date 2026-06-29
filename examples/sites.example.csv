@@ -1,0 +1,4 @@
+slug,domain,wp_path,ssh_host,ssh_user,ssh_port,ssh_key_ref,app_user,app_password_ref,da_host,da_account,dns_provider,active,notes
+boucherie-beirut,boucheriebeirut.com,/home/croc/domains/boucheriebeirut.com/public_html,server.crocweb.com,croc,22,BOUCHERIE_SSH_KEY,claude-bot,BOUCHERIE_APP_PW,https://server.crocweb.com:2222,croc,directadmin,true,TheGem
+jeconduis,jeconduis.com,/home/croc/domains/jeconduis.com/public_html,server.crocweb.com,croc,22,JECONDUIS_SSH_KEY,claude-bot,JECONDUIS_APP_PW,https://server.crocweb.com:2222,croc,cloudflare,true,Impreza
+test-sandbox,sandbox.example.com,/home/croc/domains/sandbox.example.com/public_html,server.crocweb.com,croc,22,SANDBOX_SSH_KEY,claude-bot,SANDBOX_APP_PW,https://server.crocweb.com:2222,croc,directadmin,false,throwaway test site
